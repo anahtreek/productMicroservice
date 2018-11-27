@@ -12,6 +12,6 @@ node {
                 sh 'ssh rig@52.168.175.97 "cf create-service p.mysql db-small  myservice;cf bind-service product  myservice"'          
         }
         stage('Start app') {
-                sh 'ssh rig@52.168.175.97 "cf start product;if [ $? -ne '0' ];then exit 1; fi"'          
+                sh 'ssh rig@52.168.175.97 "cf start product;if [ $? -ne 0 ];then exit 1; fi"'          
         }
 }
