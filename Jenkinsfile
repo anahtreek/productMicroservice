@@ -1,6 +1,6 @@
 node {
         stage('Checkin Code') {
-                sh '''ssh rig@52.168.175.97 "sudo rm -rf productMicroservice;sudo git clone https://github.com/anahtreek/productMicroservice.git;cd productMicroservice"'''
+                sh '''ssh rig@52.168.175.97 "cd productMicroservice;sudo git fetch --all;sudo git reset --hard origin/master"'''
            }
         stage('Build') {
                 sh 'ssh rig@52.168.175.97 "cd productMicroservice;sudo mvn install -DskipTests"'          
