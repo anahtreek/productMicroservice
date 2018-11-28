@@ -12,9 +12,8 @@ node {
                 sh 'ssh rig@52.168.175.97 "cf create-service p.mysql db-small  myservice;cf bind-service product  myservice"'          
         }
         stage('Start app') {
-                sh 'ssh rig@52.168.175.97 "cf start product"'          
-        }
-        
+                sh 'ssh rig@52.168.175.97 "cf start product;if [ $? -ne 0 ];then exit 1; fi"'          
+        }        
         stage('Smoke test') {
                 sh '''ssh rig@52.168.175.97 "curl -X POST -H 'content-type: application/json;charset=UTF-8' -d '{"productName":"HD SetupBox", "serviceId":"100"}' 'https://productmicroservice.apps.dev.pcf-aws.com/product' > response;grep '\"serviceId\":\"100\"' 'response';if [ $? -ne 0 ];then exit 1; fi"'''          
         }
